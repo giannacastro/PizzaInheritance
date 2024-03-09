@@ -1,57 +1,37 @@
-//import scanner for user input
-import java.util.Scanner;
+public class DeliveryPizza extends Pizza {
 
-public class DemoPizza {
+    //delivery fee field
+    private double deliveryFee;
 
-    //main method
-    public static void main(String[] args) {
+    //delivery address field
+    private String deliveryAddress;
 
-        //creates scanner object
-        Scanner scan = new Scanner(System.in);
+    //constructor
+    public DeliveryPizza(String[] toppings, String deliveryAddress, int numToppings) {
 
-        //prompt for toppings
-        System.out.println("enter pizza toppings (quit to finish):");
+        //calls super constructor
+        super(toppings, numToppings);
 
-        //array which holds the toppings
-        String[] toppings = new String[10];
-        //counter for the amount of toppings
-        int numToppings = 0;
+        //sets address
+        this.deliveryAddress = deliveryAddress;
 
-        //loop to get toppings
-        while (numToppings < 10) {
-            //get topping input
-            String topping = scan.nextLine();
-            //checks for 'quit'
-            if (topping.equalsIgnoreCase("quit")) {
-                break;
-            }
-            //adds topping to array
-            toppings[numToppings++] = topping;
-        }
-
-        //prompt for delivery
-        System.out.print("delivery pizza? (y/n): ");
-        //get yes/no input
-        boolean delivery = scan.nextLine().equalsIgnoreCase("y");
-
-        Pizza pizza;
-        //if delivery
-        if (delivery) {
-            //get address
-            System.out.print("enter delivery address: ");
-            String address = scan.nextLine();
-            //create delivery pizza
-            pizza = new DeliveryPizza(toppings, address, numToppings);
+        //calculates delivery fee based on price
+        if (price > 18) {
+            deliveryFee = 3;
         } else {
-            //create regular pizza
-            pizza = new Pizza(toppings, numToppings);
+            deliveryFee = 5;
         }
+    }
 
-        //print blank line
-        System.out.println();
-        //print pizza details
-        System.out.println(pizza);
+    //overrides toString
+    public String toString() {
 
+        //calls super toString
+        return super.toString() +
+
+                //adds delivery details
+                "\ndelivery fee: $" + deliveryFee +
+                "\ndelivery address: " + deliveryAddress;
     }
 
 }
