@@ -1,57 +1,43 @@
-//import scanner for user input
-import java.util.Scanner;
+//import arrays utility
+import java.util.Arrays;
 
-public class DemoPizza {
+public class Pizza {
 
-    //main method
-    public static void main(String[] args) {
+    //array to hold the toppings
+    private String[] toppings;
 
-        //creates scanner object
-        Scanner scan = new Scanner(System.in);
+    //number of toppings
+    private int numToppings;
 
-        //prompt for toppings
-        System.out.println("enter pizza toppings (quit to finish):");
+    //price field, protected so subclass can access it
+    protected double price;
 
-        //array which holds the toppings
-        String[] toppings = new String[10];
-        //counter for the amount of toppings
-        int numToppings = 0;
+    //constructor
+    public Pizza(String[] toppings, int numToppings) {
 
-        //loop to get toppings
-        while (numToppings < 10) {
-            //get topping input
-            String topping = scan.nextLine();
-            //checks for 'quit'
-            if (topping.equalsIgnoreCase("quit")) {
-                break;
+        //sets fields
+        this.toppings = toppings;
+        this.numToppings = numToppings;
+
+        //builds toppings description string
+        String desc = "";
+        for (int i = 0; i < numToppings; i++) {
+            desc += toppings[i];
+            if (i < numToppings - 1) {
+                desc += ", ";
             }
-            //adds topping to array
-            toppings[numToppings++] = topping;
         }
 
-        //prompt for delivery
-        System.out.print("delivery pizza? (y/n): ");
-        //get yes/no input
-        boolean delivery = scan.nextLine().equalsIgnoreCase("y");
+        //calculates price based on toppings
+        price = 14 + 2 * numToppings;
+    }
 
-        Pizza pizza;
-        //if delivery
-        if (delivery) {
-            //get address
-            System.out.print("enter delivery address: ");
-            String address = scan.nextLine();
-            //create delivery pizza
-            pizza = new DeliveryPizza(toppings, address, numToppings);
-        } else {
-            //create regular pizza
-            pizza = new Pizza(toppings, numToppings);
-        }
-
-        //print blank line
-        System.out.println();
-        //print pizza details
-        System.out.println(pizza);
-
+    //overrides toString
+    public String toString() {
+        return "pizza with " + numToppings + " toppings: " +
+                //uses arrays util to print array
+                Arrays.toString(toppings) +
+                "\nprice: $" + price;
     }
 
 }
